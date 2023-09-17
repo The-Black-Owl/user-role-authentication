@@ -16,6 +16,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
     private String roleType;// the role of the user can be an admin or user
-    @ManyToMany(mappedBy ="roles", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy ="role", cascade = CascadeType.ALL)
     private Set<User> users;
+
+    public Role(String roleType) {
+        this.roleType=roleType;
+    }
 }

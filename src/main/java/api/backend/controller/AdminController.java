@@ -14,9 +14,9 @@ public class AdminController {
     private ProductService productService;
     //delete users
     //count number of users on the system
-
     //see items being shipped
     //check stock count
+
 
     //create items
     @PostMapping("/add_product")
@@ -26,9 +26,15 @@ public class AdminController {
     }
     //remove items
     @DeleteMapping("/remove_product/{SKU}")
-    public ResponseEntity<String> removeProduct(@PathVariable("SKU") ProductRequest productRequest){
-        productService.deleteProduct(productRequest);
+    public ResponseEntity<String> removeProduct(@PathVariable("SKU") Long sku){
+        productService.deleteProduct(sku);
         return ResponseEntity.ok("Successfully removed item!");
     }
     //update items
+    @PutMapping("/upadte_product/{SKU}")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductRequest request, @PathVariable("SKU") Long sku){
+        ProductDTO updatedProduct=productService.updateProduct(sku,request);
+        return ResponseEntity.ok(updatedProduct);
+    }
+
 }

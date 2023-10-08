@@ -23,6 +23,7 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
+    //method to Add a product
     public ProductDTO newProduct(ProductRequest productRequest) {
         //check if the product already exists
         Optional<Products> productSKU=productRepository.findBySKU(productRequest.SKU());
@@ -44,17 +45,30 @@ public class ProductService {
 
     //method to get all products
 
+
     //method to get product by name
 
-    //method to Add a product
-
     //method to remove product
-    public void deleteProduct(ProductRequest productRequest) {
+    public void deleteProduct(Long sku) {
         //find product by skuNumber
-        if(productRepository.findBySKU(productRequest.SKU()).isPresent()){
-            productRepository.deleteBySKU(productRequest.SKU());
+        if(productRepository.findBySKU(sku).isPresent()){
+            productRepository.deleteBySKU(sku);
         }
         throw new RuntimeException(HttpStatus.NOT_FOUND.toString());
     }
+
     //method to update a product
+    public ProductDTO updateProduct(Long sku, ProductRequest request) {
+        Optional<Products> findProduct=productRepository.findBySKU(sku);
+        if(!findProduct.isPresent()){
+            throw new RuntimeException(HttpStatus.NOT_FOUND.toString());
+        }
+        Products products=productMapper.prodRequestToProducts(request);
+        products.setProductName(request.productName());
+        products.setProductDescription(request.productDescription());
+
+        Products updatedProduct=productRepository.save(products);
+        return productMapper.toProductDto(updatedProduct);
+    }
+
 }

@@ -22,7 +22,7 @@ public class AuthenticationController {
 
     private final UserAuthProvider userAuthProvider;
 
-    //method to login a user
+    //method to log in a user
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody AuthenticationRequest request){
         UserDTO user= userService.login(request);

@@ -24,9 +24,8 @@ public class SecurityConfig {
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request->{
                     request.requestMatchers(HttpMethod.POST,"/auth/**").permitAll();
-                    request.requestMatchers("/admin/**").hasRole("ADMIN");
-                    request.requestMatchers("/user/**").hasRole("USER");
-                    request.requestMatchers("/").hasAnyRole();//path to the online store
+                    request.requestMatchers("/admin/**").permitAll();
+                    request.requestMatchers("/customer/**").hasRole("CUSTOMER");
                     request.anyRequest().authenticated();});
         return http.build();
         //the token will be the main authentication filter

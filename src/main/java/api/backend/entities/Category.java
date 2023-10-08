@@ -1,10 +1,26 @@
 package api.backend.entities;
 
-public class Category {
-    private Long categoryID;
-    private String categoryType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    //the category must be linked with the product
-    //One can have many products in one category
-    private Product product;
+import java.util.Set;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categoryID;
+    private String categoryName;
+
+    @OneToMany(fetch= FetchType.EAGER ,mappedBy="category")
+    private Set<Products> products;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

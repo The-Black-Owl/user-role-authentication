@@ -49,6 +49,7 @@ public class UserService {
         //create user role
         HashSet<Role> userRole=new HashSet<>();
         userRole.add(new Role("USER"));
+        roleRepository.save(new Role("USER"));
 
         User user=userMapper.signUpToUser(request);
         user.setRole(userRole);
